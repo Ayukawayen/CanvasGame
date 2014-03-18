@@ -1,0 +1,180 @@
+*{
+	margin:0;
+	padding:0;
+	
+	overflow:hidden;
+}
+
+html {
+	font-size:16px;
+}
+
+#main {
+	width:970px;
+	
+	margin:10px auto 10px;
+}
+
+#headerControl {
+	width:100%;
+	height:120px;
+	
+	border-radius:20px;
+}
+#headerControl.opened, #headerControl:hover {
+	height:120px;
+}
+
+#headerControl >h2 {
+	font-size:1.5rem;
+	
+	height:35px;
+	
+	margin:5px 20px 0;
+}
+#headerControl #controlSetting {
+	margin:0 10px;
+}
+#headerControl #controlSetting .controlSettingItemList, #headerControl #controlSetting #controlSettingSubmit {
+	float:left;
+	height:50px;
+	margin:0 0 0 10px;
+}
+#headerControl #controlSetting #controlSettingHint {
+	font-size:0.75rem;
+	
+	clear:both;
+	
+	height:15px;
+	padding:5px 0 0;
+	margin:0 0 0 50px;
+}
+
+#headerControl #controlSetting .controlSettingItemList >dt, #headerControl #controlSetting .controlSettingItemList >dd {
+	height:25px;
+}
+#headerControl #controlSetting .controlSettingItemList >dt {
+	float:left;
+	clear:left;
+	
+	width:40px;
+	
+	font-weight:bold;
+}
+#headerControl #controlSetting #controlSettingGame.controlSettingItemList >dt {
+	width:50px;
+}
+#headerControl #controlSetting .controlSettingItemList >dd {
+	float:left;
+}
+#headerControl #controlSetting .controlSettingItemList >dd >label{
+	padding:0 0.5em 0 0;
+}
+#headerControl #controlSetting #controlSettingSource #controlSettingURL{
+	width:230px;
+}
+
+
+#headerControl #controlSetting #controlSettingSubmit >input {
+	width:60px;
+	height:100%;
+	
+	border-radius:5px;
+	
+	text-align:center;
+}
+
+#mainContent {
+	width:100%;
+	height:410px;
+}
+
+#mainContent #gameArea, #mainContent #gameRightSide {
+	float:left;
+	
+	margin:10px 0 0 10px;
+	height:390px;
+}
+#mainContent #gameArea {
+	width:670px;
+}
+#mainContent #gameRightSide {
+	width:270px;
+}
+
+#mainContent #gameArea .gameContent, #mainContent #gameRightSide >dl {
+	margin:10px 10px;
+}
+#mainContent #gameArea .gameContent {
+	width:640px;
+	height:360px;
+	
+	border-style:solid;
+	border-width:5px;
+	border-radius:5px;
+}
+
+#mainContent #gameArea.completed #gameCanvas {
+	display:none;
+}
+
+
+#gameRightSide >div {
+	margin:10px 10px 0;
+}
+#gameRightSide >div h4 {
+	margin:10px 10px 0;
+}
+
+#gameRightSide #gameStat >dl {
+	margin:10px 10px;
+}
+
+#gameRightSide #gameStat >dl >dd{
+	margin:0 0 0 20px;
+}
+
+
+#gameShare #shareText {
+	font-size:0.75rem;
+	
+	margin:10px 10px 0;
+	padding:10px 10px 0;
+	height:90px;
+	
+	border-radius:10px;
+	
+	word-break:break-all;
+	white-space:pre-line;
+}
+
+#gameShare #shareList {
+	list-style-type:none;
+}
+#gameShare #shareList >li{
+	float:left;
+	
+	width:50px;
+	height:60px;
+	
+	margin:0 0 0 10px;
+}
+#gameShare #shareList >li >svg{
+	display:block;
+	visibility:hidden;
+}
+#gameShare #shareList >li:hover >svg, #gameShare #shareList >li:active >svg{
+	visibility:visible
+}
+#gameShare #shareList >li >img{
+	width:50px;
+	height:50px;
+	
+	border-radius:10px;
+}
+
+#gameShare #shareHint {
+	font-size:0.75rem;
+	
+	margin:5px 0 10px 10px;
+}

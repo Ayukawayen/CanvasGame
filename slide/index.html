@@ -1,0 +1,112 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw" xml:lang="zh-tw"> 
+	<head> 
+		<title>AnyMedia Sliding Puzzle - BETA</title> 
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+		
+		<meta property="og:url" content="http://ayukawayen.net/CanvasGame/slide/" />
+		<meta property="og:title" content="AnyMedia Sliding Puzzle - BETA" />
+		<meta property="og:image" content="http://ayukawayen.net/CanvasGame/image/logo.png" />
+		<meta property="og:description" content="用自訂的影片及圖片來場推盤遊戲" />
+		<meta name="description" content="用自訂的影片及圖片來場推盤遊戲" />
+		
+		<link href="style.css?0313" rel="stylesheet" type="text/css" />
+		<link href="layout.css?0313" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div id="main" class="">
+			<div id="headerControl" class="" onclick="this.className='opened';">
+				<h2>Game Media Setting</h2>
+				<div id="controlSetting">
+					<dl id="controlSettingSource" class="controlSettingItemList">
+						<dt>Type</dt>
+						<dd>
+							<input type="radio" id="controlSettingTypeImage" name="controlSettingType" value="image"><label for="controlSettingTypeImage">Image</label>
+							<input type="radio" id="controlSettingTypeVideo" name="controlSettingType" value="video"><label for="controlSettingTypeVideo">Video</label>
+						</dd>
+						<dt>URL</dt>
+						<dd>
+							<input type="text" id="controlSettingURL" value="" />
+						</dd>
+					</dl>
+					<dl id="controlSettingGame" class="controlSettingItemList">
+						<dt>Level</dt>
+						<dd>
+							<input type="number" id="controlSettingLevel" min="0" max="7" value="1" />
+						</dd>
+					</dl>
+					<div id="controlSettingSubmit">
+						<input type="button" value="PLAY" onclick="return onControlSubmitClick();"/>
+					</div>
+					<div id="controlSettingHint">
+						* <span id="controlSettingHintType">多媒體</span>空間需支援<a href="http://www.w3.org/TR/cors/" target="_blank" title="Cross-Origin Resource Sharing">CORS</a>，已知的支援網站：<span id="controlSettingHintSites"></span>。
+					</div>
+				</div>
+			</div>
+			
+			<div id="mainContent">
+				<div id="gameArea">
+					<canvas id="gameCanvas" class="gameContent" width="640" height="360"></canvas>
+				</div>
+				<div id="gameRightSide">
+					<div id="gameStat">
+						<dl>
+							<dt>Time</dt><dd class="time">0</dd>
+							<dt>Moves</dt><dd class="move">0</dd>
+						</dl>
+					</div>
+					<div id="gameShare">
+						<h4>Share</h4>
+						<div id="shareText">
+						</div>
+						<ul id="shareList">
+							<li id="shareFb" onclick="onShareItemClick('fb');"><svg height="10" width="50">
+									<polygon points="15,0 25,10 35,0" style="fill:#fff"></polygon>
+								</svg>
+								<img src="../image/shareIcon/fb.png" title="Share to Facebook" />
+							</li>
+							<li id="shareGplus" onclick="onShareItemClick('gplus');">
+								<svg height="10" width="50">
+									<polygon points="15,0 25,10 35,0" style="fill:#fff"></polygon>
+								</svg>
+								<img src="../image/shareIcon/gplus.png" title="Share to Google+" />
+							</li>
+							<li id="shareTwitter" onclick="onShareItemClick('twitter');">
+								<svg height="10" width="50">
+									<polygon points="15,0 25,10 35,0" style="fill:#fff"></polygon>
+								</svg>
+								<img src="../image/shareIcon/twitter.png" title="Share to Twitter" />
+							</li>
+							<li id="sharePlurk" onclick="onShareItemClick('plurk');">
+								<svg height="10" width="50">
+									<polygon points="15,0 25,10 35,0" style="fill:#fff"></polygon>
+								</svg>
+								<img src="../image/shareIcon/plurk.png" title="Share to Plurk" />
+							</li>
+						</ul>
+						<div id="shareHint"> *分享前請確定擁有分享原始圖片/影片之權利</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="mainFooter">
+			</div>
+		</div>
+	</body>
+	
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43610298-5', 'ayukawayen.net');
+  ga('send', 'pageview');
+
+</script>
+	
+	<script type="text/javascript" src="../lib/lib.js?0313"></script>
+	<script type="text/javascript" src="../lib/share.js?0313"></script>
+	<script type="text/javascript" src="script.js?0313"></script>
+	<script type="text/javascript" src="main.js?0313"></script>
+</html>

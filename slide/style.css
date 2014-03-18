@@ -1,0 +1,36 @@
+html {
+	background-color:#cc9;
+}
+
+#headerControl {
+	background-color:#333;
+	color:#ccc;
+}
+
+#headerControl a, #headerControl a:visited {
+	color:#ccf;
+}
+#headerControl a:hover, #headerControl a:active {
+	color:#fff;
+}
+
+#mainContent #gameArea {
+	background-color:#cc6;
+}
+#mainContent #gameRightSide {
+	background-color:#66c;
+}
+
+#mainContent #gameArea .gameContent {
+	border-color:#333;
+	background-color:#333;
+}
+
+
+#gameRightSide >div {
+	background-color:#ccc;
+}
+
+#gameShare #shareText {
+	background-color:#fff;
+}
