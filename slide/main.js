@@ -95,6 +95,31 @@ function init() {
 		}
 	}
 	
+	
+	document.querySelector("#gameCanvas").onclick = function(e) {
+		var x = e.pageX-e.target.offsetLeft;
+		var y = e.pageY-e.target.offsetTop;
+		
+		var c = Math.floor(x/Slide.blockWidth);
+		var r = Math.floor(y/Slide.blockHeight);
+
+		if(c == Slide.point.col) {
+			if(r == Slide.point.row-1) {
+				direct=2;
+			}
+			else if(r == Slide.point.row+1) {
+				direct=8;
+			}
+		}
+		else if(r == Slide.point.row) {
+			if(c == Slide.point.col-1) {
+				direct=6;
+			}
+			else if(c == Slide.point.col+1) {
+				direct=4;
+			}
+		}
+	}
 	document.querySelector("html").onkeyup = function(e) {
 		if(e.keyCode == 37) {
 			direct=4;
@@ -271,7 +296,7 @@ function refreshShareText() {
 		text += "我花了" + (document.querySelector("#gameStat .move").innerHTML) + "步";
 		text += (Slide.validate() ? "就完成了" : "還沒破解") + "。";
 	}
-	document.querySelector("#shareText").innerHTML = text;
+	document.querySelector("#shareText >textArea").innerHTML = text;
 }
 
 function onShareItemClick(site) {
@@ -282,9 +307,9 @@ function onShareItemClick(site) {
 		ShareGplus.share("");
 	}
 	else if(site == "twitter") {
-		ShareTwitter.share(document.querySelector("#shareText").innerHTML);
+		ShareTwitter.share(document.querySelector("#shareText >textArea").innerHTML);
 	}
 	else if(site == "plurk") {
-		SharePlurk.share(document.querySelector("#shareText").innerHTML);
+		SharePlurk.share(document.querySelector("#shareText >textArea").innerHTML);
 	}
 }

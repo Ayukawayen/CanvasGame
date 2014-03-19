@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "AnyMedia Sliding Puzzle",
+  "version": "0.0.1",
+  
+  "description": "用網路圖片玩推盤遊戲",
+  "icons": {
+    "16":"icon/icon_16.png",
+    "32":"icon/icon_32.png",
+    "128":"icon/icon_128.png"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+	"contextMenus"
+  ],
+  "short_name": "AnyMedia Sliding Puzzle"
+}
