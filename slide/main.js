@@ -36,6 +36,7 @@ var gSourceSetting = {
 	"url":"http://upload.wikimedia.org/wikipedia/commons/transcoded/e/e7/Cheetahs_on_the_Edge_%28Director%27s_Cut%29.webm/Cheetahs_on_the_Edge_%28Director%27s_Cut%29.webm.360p.webm",
 };
 var gLevel = 1;
+var gSeed = 1;
 
 var gSourceHints = {
 	"image":"",
@@ -54,15 +55,50 @@ var direct = null;
 
 var gParams = getParams(location.hash);
 
-init();
+loadParams();
 
-
-function init() {
-	loadParams();
+function loadParams() {
+	if(gParams["level"] != null) {
+		gLevel = Math.floor(gParams["level"]);
+	}
+	else if(gParams["l"] != null) {
+		gLevel = Math.floor(gParams["l"]);
+	}
 	
+	if(gParams["s"] != null) {
+		gSeed = parseInt(gParams["s"], 36);
+		if(isNaN(gSeed)) {
+			gSeed = 1;
+		}
+	}
+	else {
+		gSeed = (new Date().getTime())%0x7fffffff;
+	}
+	
+	if(gParams["k"]) {
+		getHashValue(gParams["k"], function(value){
+			gParams = getParams("#"+value+"&l="+gLevel+"&s="+gSeed.toString(36));
+			loadParams();
+		});
+		return;
+	}
+	else if(gParams["video"]) {
+		gSourceSetting.type = "video";
+		gSourceSetting.url = decodeURIComponent(gParams["video"]);
+	}
+	else if(gParams["image"]) {
+		gSourceSetting.type = "image";
+		gSourceSetting.url = decodeURIComponent(gParams["image"]);
+	}
+	onParamsLoaded();
+}
+
+
+function onParamsLoaded() {
 	document.querySelector("#controlSettingSource input[name=controlSettingType][value="+gSourceSetting.type+"]").checked = true;
 	document.querySelector("#controlSettingURL").value = gSourceSetting.url;
 	document.querySelector("#controlSettingLevel").value = gLevel;
+	
 	onControlSourceTypeChange(gSourceSetting.type);
 	
 	for(var i=0;i<CORS_SITES.length;++i) {
@@ -142,23 +178,14 @@ function init() {
 	}
 }
 
-function loadParams() {
-	if(gParams["level"] != null) {
-		gLevel = Math.floor(gParams["level"]);
-	}
-	
-	if(gParams["video"]) {
-		gSourceSetting.type = "video";
-		gSourceSetting.url = decodeURIComponent(gParams["video"]);
-	}
-	else if(gParams["image"]) {
-		gSourceSetting.type = "image";
-		gSourceSetting.url = decodeURIComponent(gParams["image"]);
-	}
-}
 
 function onControlSourceTypeChange(value) {
+	if(gSourceSetting.type == value) {
+		return;
+	}
+	
 	gSourceSetting.type = value;
+	document.querySelector("#controlSettingURL").value = "";
 	
 	document.querySelector("#controlSettingHintSites").innerHTML = gSourceHints[gSourceSetting.type];
 	if(gSourceSetting.type == "image") {
@@ -175,10 +202,17 @@ function onControlSubmitClick() {
 	gLevel = document.querySelector("#controlSettingLevel").value;
 	
 	gSourceSetting.url = document.querySelector("#controlSettingURL").value;
+	document.querySelector("#gameSourceLink >a").href = gSourceSetting.url;
+	document.querySelector("#gameSourceLink >a").innerHTML = "原始"+(gSourceSetting.type=="video"?"影片":"圖片");
 	
 	postSourceNode();
 	
-	location.hash = "#"+gSourceSetting.type+"="+encodeURIComponent(gSourceSetting.url)+"&level="+gLevel;
+	var mediaParam = gSourceSetting.type+"="+encodeURIComponent(gSourceSetting.url);
+	getHashKey(mediaParam, function(key){
+		location.hash = "#k="+key+"&l="+gLevel+"&s="+gSeed.toString(36);
+		refreshShareText();
+	});
+	location.hash = "#"+mediaParam+"&l="+gLevel+"&s="+gSeed.toString(36);
 	
 	document.querySelector("#headerControl").className = "closed";
 	if(event && event.stopPropagation) {
@@ -222,6 +256,7 @@ function postSourceNode() {
 		return;
 	}
 	
+	srcNode.id = "gameSource";
 	srcNode.className = "gameContent";
 	document.querySelector("#gameArea").appendChild(srcNode);
 }
@@ -251,6 +286,13 @@ function createVideoSourceNode() {
 
 function onSourceLoaded() {
 	direct = null;
+	
+	var seed = 0;
+	for(var i=0;i<gSourceSetting.url.length;++i) {
+		seed += gSourceSetting.url.charCodeAt(i)<<(8*(i%4));
+	}
+	Rand.setSeed(gSeed+seed);
+
 	Slide.init(srcNode, ctx, gLevel);
 	Slide.draw();
 	
@@ -290,8 +332,8 @@ function onTimerTick() {
 }
 
 function refreshShareText() {
-	var text = location.href+" ";
-	text += "用"+(gSourceSetting.type=="video" ? "這部影片" : "這張圖") + ": "+ gSourceSetting.url+" 玩場推盤遊戲吧。\n";
+	var text = gSourceSetting.url+"\n";
+	text += "用"+(gSourceSetting.type=="video" ? "這部影片" : "這張圖") + "玩場推盤遊戲吧:"+location.href+"\n";;
 	if(document.querySelector("#gameStat .move").innerHTML > 0) {
 		text += "我花了" + (document.querySelector("#gameStat .move").innerHTML) + "步";
 		text += (Slide.validate() ? "就完成了" : "還沒破解") + "。";
@@ -307,9 +349,47 @@ function onShareItemClick(site) {
 		ShareGplus.share("");
 	}
 	else if(site == "twitter") {
-		ShareTwitter.share(document.querySelector("#shareText >textArea").innerHTML);
+		ShareTwitter.share(document.querySelector("#shareText >textArea").value);
 	}
 	else if(site == "plurk") {
-		SharePlurk.share(document.querySelector("#shareText >textArea").innerHTML);
+		SharePlurk.share(document.querySelector("#shareText >textArea").value);
 	}
 }
+
+
+
+function getHashKey(value, callback) {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+		if (this.readyState==4 && this.status==200) {
+			callback(this.responseText);
+			delete this;
+		}
+	};
+	request.open("GET", "../api/putHashStr.php?data="+value);
+	request.send();
+}
+function getHashValue(key, callback) {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+		if (this.readyState==4 && this.status==200) {
+			callback(this.responseText);
+			delete this;
+		}
+	};
+	request.open("GET", "../api/getHashStr.php?key="+key);
+	request.send();
+}
+/*
+function getShortUrl(longUrl, callback) {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+		if (this.readyState==4 && this.status==200) {
+			callback("http://ayukawayen.net/CanvasGame/short/?k="+this.responseText);
+			delete this;
+		}
+	};
+	request.open("GET", "../api/putHashStr.php?data="+value);
+	request.send();
+}
+*/

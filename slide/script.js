@@ -57,23 +57,31 @@ var Slide = {
 			}
 		}
 		
-		this.block.col = this.point.col = Math.floor(Math.random()*this.colCount)%this.colCount;
-		this.block.row = this.point.row = Math.floor(Math.random()*this.rowCount)%this.rowCount;
+		this.block.col = this.point.col = Math.floor(Rand.random()*this.colCount)%this.colCount;
+		this.block.row = this.point.row = Math.floor(Rand.random()*this.rowCount)%this.rowCount;
 		
-		this.moveTo({"col":Math.floor(this.colCount*0.1), "row":Math.floor(this.rowCount*0.1)});
+		this.moveTo({"col":0, "row":0});
 		this.shuffle(this.colCount*this.rowCount);
-		this.moveTo({"col":Math.floor(this.colCount*0.1), "row":Math.floor(this.rowCount*0.9)});
+		this.moveTo({"col":0, "row":0});
+		
+		this.moveTo({"col":0, "row":this.rowCount-1});
 		this.shuffle(this.colCount*this.rowCount);
-		this.moveTo({"col":Math.floor(this.colCount*0.9), "row":Math.floor(this.rowCount*0.9)});
+		this.moveTo({"col":0, "row":this.rowCount-1});
+		
+		this.moveTo({"col":this.colCount-1, "row":this.rowCount-1});
 		this.shuffle(this.colCount*this.rowCount);
-		this.moveTo({"col":Math.floor(this.colCount*0.9), "row":Math.floor(this.rowCount*0.1)});
+		this.moveTo({"col":this.colCount-1, "row":this.rowCount-1});
+		
+		this.moveTo({"col":this.colCount-1, "row":0});
 		this.shuffle(this.colCount*this.rowCount);
+		this.moveTo({"col":this.colCount-1, "row":0});
+		
 		this.moveTo({"col":Math.floor(this.colCount*0.5), "row":Math.floor(this.rowCount*0.5)});
 		this.shuffle(this.colCount*this.rowCount);
 	},
 	shuffle:function(count) {
 		for(var i=0;i<count;++i) {
-			var r = Math.floor(Math.random()*4);
+			var r = Math.floor(Rand.random()*4);
 			for(var d=0;d<4;++d) {
 				var direct = ((r+d)%4+1)*2;
 				if(this.move(direct)) {

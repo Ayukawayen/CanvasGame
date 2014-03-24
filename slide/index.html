@@ -3,6 +3,7 @@
 	<head> 
 		<title>AnyMedia Sliding Puzzle - BETA</title> 
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+		<link rel="icon" type="image/png" href="icon/icon_16.png" />
 		
 		<meta property="og:url" content="http://ayukawayen.net/CanvasGame/slide/" />
 		<meta property="og:title" content="AnyMedia Sliding Puzzle - BETA" />
@@ -10,36 +11,38 @@
 		<meta property="og:description" content="用自訂的影片及圖片來場推盤遊戲" />
 		<meta name="description" content="用自訂的影片及圖片來場推盤遊戲" />
 		
-		<link href="style.css?0317" rel="stylesheet" type="text/css" />
-		<link href="layout.css?0318" rel="stylesheet" type="text/css" />
+		<link href="style.css?032014" rel="stylesheet" type="text/css" />
+		<link href="layout.css?032014" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<div id="main" class="">
-			<div id="headerControl" class="" onclick="this.className='opened';">
-				<h2>Game Media Setting</h2>
-				<div id="controlSetting">
-					<dl id="controlSettingSource" class="controlSettingItemList">
-						<dt>Type</dt>
-						<dd>
-							<input type="radio" id="controlSettingTypeImage" name="controlSettingType" value="image"><label for="controlSettingTypeImage">Image</label>
-							<input type="radio" id="controlSettingTypeVideo" name="controlSettingType" value="video"><label for="controlSettingTypeVideo">Video</label>
-						</dd>
-						<dt>URL</dt>
-						<dd>
-							<input type="text" id="controlSettingURL" value="" />
-						</dd>
-					</dl>
-					<dl id="controlSettingGame" class="controlSettingItemList">
-						<dt>Level</dt>
-						<dd>
-							<input type="number" id="controlSettingLevel" min="0" max="7" value="1" />
-						</dd>
-					</dl>
-					<div id="controlSettingSubmit">
-						<input type="button" value="PLAY" onclick="return onControlSubmitClick();"/>
-					</div>
-					<div id="controlSettingHint">
-						* <span id="controlSettingHintType">多媒體</span>空間需支援<a href="http://www.w3.org/TR/cors/" target="_blank" title="Cross-Origin Resource Sharing">CORS</a>，已知的支援網站：<span id="controlSettingHintSites"></span>。
+			<div id="mainHeader">
+				<div id="headerControl" class="" onclick="this.className='opened';">
+					<h2>遊戲設定</h2>
+					<div id="controlSetting">
+						<dl id="controlSettingSource" class="controlSettingItemList">
+							<dt>類型</dt>
+							<dd>
+								<input type="radio" id="controlSettingTypeImage" name="controlSettingType" value="image"><label for="controlSettingTypeImage">圖片</label>
+								<input type="radio" id="controlSettingTypeVideo" name="controlSettingType" value="video"><label for="controlSettingTypeVideo">影片</label>
+							</dd>
+							<dt>網址</dt>
+							<dd>
+								<input type="text" id="controlSettingURL" value="" />
+							</dd>
+						</dl>
+						<dl id="controlSettingGame" class="controlSettingItemList">
+							<dt>等級</dt>
+							<dd>
+								<input type="number" id="controlSettingLevel" min="0" max="7" value="1" />
+							</dd>
+						</dl>
+						<div id="controlSettingSubmit">
+							<input type="button" value="PLAY" onclick="return onControlSubmitClick();"/>
+						</div>
+						<div id="controlSettingHint">
+							* <span id="controlSettingHintType">多媒體</span>空間需支援<a href="http://www.w3.org/TR/cors/" target="_blank" title="Cross-Origin Resource Sharing">CORS</a>，已知的支援網站：<span id="controlSettingHintSites"></span>。
+						</div>
 					</div>
 				</div>
 			</div>
@@ -47,16 +50,17 @@
 			<div id="mainContent">
 				<div id="gameArea">
 					<canvas id="gameCanvas" class="gameContent" width="640" height="360"></canvas>
+					<div id="gameSourceLink"><a href="" target="_blank">原始圖片</a></div>
 				</div>
 				<div id="gameRightSide">
 					<div id="gameStat">
 						<dl>
-							<dt>Time</dt><dd class="time">0</dd>
-							<dt>Moves</dt><dd class="move">0</dd>
+							<dt>時間</dt><dd class="time">0</dd>
+							<dt>步數</dt><dd class="move">0</dd>
 						</dl>
 					</div>
 					<div id="gameShare">
-						<h4>Share</h4>
+						<h4>分享</h4>
 						<div id="shareText">
 							<textArea readonly="readonly"></textArea>
 						</div>
@@ -107,7 +111,8 @@
 </script>
 	
 	<script type="text/javascript" src="../lib/lib.js?0313"></script>
+	<script type="text/javascript" src="../lib/rand.js?0321"></script>
 	<script type="text/javascript" src="../lib/share.js?0313"></script>
-	<script type="text/javascript" src="script.js?0317"></script>
-	<script type="text/javascript" src="main.js?0318"></script>
+	<script type="text/javascript" src="script.js?0321"></script>
+	<script type="text/javascript" src="main.js?0321"></script>
 </html>
